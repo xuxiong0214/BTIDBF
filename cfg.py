@@ -36,8 +36,6 @@ def get_arguments():
     parser.add_argument("--uround", type=int, default=30)
     parser.add_argument("--norm_bound", type=float, default=0.3)
     parser.add_argument("--feat_bound", type=float, default=5)
-    parser.add_argument("--remask_feat_weight", type=float, default=100)
-    parser.add_argument("--mask_weight", type=float, default=0)
 
 
 

@@ -1,13 +1,39 @@
-# Download Models
-You can download the required demo models from the following link.
+# Towards Reliable and Efficient Backdoor Trigger Inversion via Decoupling Benign Features
 
-https://www.dropbox.com/scl/fi/dzqwrerij6kdwi3nyj87o/required_models.zip?rlkey=a9r2aa3tf72um8gltaussi0qn&dl=0
+## Requirements
 
+To install requirements:
 
-# Run
+```setup
+pip install -r requirements.txt
 ```
-python demo.py --dataset cifar --tlabel 0 --model resnet18 --attack ia --device cuda:0 --size 32 --num_classes 10 --batch_size 128 --attack_type all-to-one
+Make sure the directory follows:
+```File Tree
+stealingverification
+├── checkpoints
+│
+├── datasets
+│   ├── cifar10
+│   └── ...
+├── models 
+│   
+├── results
+│   
 ```
 
-# Run on Jupyter version
-A detailed introduction to each module of our code can be found in the demo.ipynb .
+## Download Poisoned Models
+
+>You can download the poisoned models which we have pretrained from the following link:
+>[checkpoints](https://www.dropbox.com/scl/fo/m1tnyzylecimqtosr5oyv/h?rlkey=cnw876kh25gf0518ipjrbfu97&dl=0)
+
+## Pretrain Generator
+```
+python pretrain.py --dataset cifar --tlabel 5 --model resnet18 --attack wanet --device cuda:0 --size 32 --num_classes 10 --batch_size 128 --attack_type all2one
+```
+
+
+## BTI-DBF
+```
+python btidbf.py --dataset cifar --tlabel 5 --model resnet18 --attack wanet --device cuda:0 --size 32 --num_classes 10 --batch_size 128 --attack_type all2one\
+--mround 20 --uround 30 --norm_bound 0.3
+```
