@@ -17,7 +17,7 @@ if __name__ == "__main__":
     cln_testloader = box.get_dataloader(train="test", batch_size=opt.batch_size, shuffle=False)
 
     generator = UNet(n_channels=3, num_classes=3, base_filter_num=32, num_blocks=4).to(device)
-    opt_g = torch.optim.Adam(generator.parameters(), lr=opt.netU_lr)
+    opt_g = torch.optim.Adam(generator.parameters(), lr=opt.gen_lr)
 
     mse = torch.nn.MSELoss()
     ce = torch.nn.CrossEntropyLoss()

@@ -29,9 +29,9 @@ def test(testloader, testmodel, box, poisoned=False, poitarget=False , midmodel 
                 inputs = tmodel(inputs + gnoise)
 
             if poitarget:
-                if box.attack_type == "all-to-all":
+                if box.attack_type == "all2all":
                     targets = torch.remainder(targets+1, box.num_classes).to(box.device)
-                elif box.attack_type == "all-to-one":
+                elif box.attack_type == "all2one":
                     targets = torch.ones_like(targets, device=box.device) * box.tlabel
 
             if not feat_mask is None:

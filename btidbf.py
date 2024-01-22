@@ -19,7 +19,7 @@ def main(opt):
     bd_gen = UNet(n_channels=3, num_classes=3, base_filter_num=32, num_blocks=4)
     bd_gen.load_state_dict(torch.load(os.path.join(save_path, "pretrain/init_generator.pt"), map_location=torch.device('cpu')))
     bd_gen = bd_gen.to(device)
-    opt_bd = torch.optim.Adam(bd_gen.parameters(), lr=opt.netU_lr)
+    opt_bd = torch.optim.Adam(bd_gen.parameters(), lr=opt.gen_lr)
     bd_gen.eval()
 
     mse = torch.nn.MSELoss()
@@ -66,10 +66,10 @@ def main(opt):
                               "mask_norm": "{:.4f}".format(mask_norm)})
             
     feat_mask = m_gen.get_raw_mask().detach()
-    Min = float('inf')
+    max_bd_feat = -float('inf')
+    final_bd_gen = None
 
     for u in range(opt.uround):
-        print(f"Train NetU Epoch-{u}")
         tloss = 0
         tloss_benign_feat = 0
         tloss_backdoor_feat = 0
@@ -80,12 +80,12 @@ def main(opt):
         pbar = tqdm(cln_trainloader, desc="Training Backdoor Generator")
         for batch_idx, (cln_img, targets) in enumerate(pbar):
             cln_img = cln_img.to(device)
-            pur_img = bd_gen(cln_img)
+            bd_gen_img = bd_gen(cln_img)
             cln_feat = classifier.from_input_to_features(cln_img)
-            pur_feat = classifier.from_input_to_features(pur_img)
-            loss_benign_feat = mse(feat_mask*cln_feat, feat_mask*pur_feat)
-            loss_backdoor_feat = mse((1-feat_mask)*cln_feat, (1-feat_mask)*pur_feat)
-            loss_norm = mse(cln_img, pur_img)
+            bd_gen_feat = classifier.from_input_to_features(bd_gen_img)
+            loss_benign_feat = mse(feat_mask*cln_feat, feat_mask*bd_gen_feat)
+            loss_backdoor_feat = mse((1-feat_mask)*cln_feat, (1-feat_mask)*bd_gen_feat)
+            loss_norm = mse(cln_img, bd_gen_img)
 
             if loss_norm > opt.norm_bound or loss_benign_feat > opt.feat_bound:
                 loss = loss_norm
@@ -100,18 +100,25 @@ def main(opt):
             tloss_benign_feat += loss_benign_feat.item()
             tloss_backdoor_feat += loss_backdoor_feat.item()
             tloss_norm += loss_norm.item()
-
             pbar.set_postfix({"epoch": "{:d}".format(u), 
                               "loss": "{:.4f}".format(tloss/(batch_idx+1)), 
                               "loss_bengin_feat": "{:.4f}".format(tloss_benign_feat/(batch_idx+1)),
                               "loss_backdoor_feat": "{:.4f}".format(tloss_backdoor_feat/(batch_idx+1)),
                               "loss_norm": "{:.4f}".format(tloss_norm/(batch_idx+1))})
         
+        if opt.use_max_bd_feat and tloss_backdoor_feat > max_bd_feat:
+            max_bd_feat = tloss_backdoor_feat
+            final_bd_gen = deepcopy(bd_gen)
+
+    if opt.use_max_bd_feat and not max_bd_feat is None:
+        bd_gen = final_bd_gen
+
     detected_tlabel = get_target_label(testloader=cln_trainloader, testmodel=classifier, box=box, midmodel=bd_gen)
     print(f"Target Label is {detected_tlabel}")
     return detected_tlabel
 
 if __name__ == "__main__":
     opt = cfg.get_arguments().parse_args()
+    opt.use_max_bd_feat = False
     detected_tlabel = main(opt)
 

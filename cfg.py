@@ -29,14 +29,17 @@ def get_arguments():
 
     #pretrain
     parser.add_argument("--preround", type=int, default=50)
-    parser.add_argument("--netU_lr", type=float, default=1e-3)
+    parser.add_argument("--gen_lr", type=float, default=1e-3)
 
     #bti-dbf
     parser.add_argument("--mround", type=int, default=20)
     parser.add_argument("--uround", type=int, default=30)
     parser.add_argument("--norm_bound", type=float, default=0.3)
-    parser.add_argument("--feat_bound", type=float, default=5)
+    parser.add_argument("--feat_bound", type=float, default=3)
 
-
+    #bti-dbf (u)
+    parser.add_argument("--nround", type=int, default=5)
+    parser.add_argument("--ul_round", type=int, default=50)
+    parser.add_argument("--earlystop", type=bool, default=False)
 
     return parser
