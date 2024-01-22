@@ -78,9 +78,10 @@ def get_target_label(testloader, testmodel, box, midmodel = None):
 
             for i in range(inputs.shape[0]):
                 p = predicted[i]
-                t = targets[i]
-                if p == t:
-                    reg[t] += 1
+                reg[p] += 1
+                # t = targets[i]
+                # if p == t:
+                #     reg[t] += 1
                     
     return np.argmax(reg)
 

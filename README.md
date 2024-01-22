@@ -34,6 +34,6 @@ python pretrain.py --dataset cifar --tlabel 5 --model resnet18 --attack wanet --
 
 ## BTI-DBF
 ```
-python btidbf.py --dataset cifar --tlabel 5 --model resnet18 --attack wanet --device cuda:0 --size 32 --num_classes 10 --batch_size 128 --attack_type all2one\
+python btidbf.py --dataset cifar --tlabel 5 --model resnet18 --attack wanet --device cuda:0 --size 32 --num_classes 10 --batch_size 128 --attack_type all2one \
 --mround 20 --uround 30 --norm_bound 0.3
 ```
