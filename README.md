@@ -45,20 +45,20 @@ for imgs, labels in testloader:
 python pretrain.py --dataset cifar --tlabel 5 --model resnet18 --attack wanet --device cuda:0 --size 32 --num_classes 10 --batch_size 128 --attack_type all2one
 ```
 
-## BTI-DBF
-
-### Inversion
+## Inversion
 ```
 python btidbf.py --dataset cifar --tlabel 5 --model resnet18 --attack wanet --device cuda:0 --size 32 --num_classes 10 --batch_size 128 --attack_type all2one \
 --mround 20 --uround 30 --norm_bound 0.3
 ```
-### Defense
-#### BTI-DBF (U)
+## Defense
+
+### BTI-DBF (U)
 ```
 python btidbfu.py --dataset cifar --tlabel 5 --model resnet18 --attack wanet --device cuda:0 --size 32 --num_classes 10 --batch_size 128 --attack_type all2one \
 --mround 20 --uround 30 --norm_bound 0.3 --ul_round 30 --nround 5
 ```
-#### BTI-DBF (P)
+
+### BTI-DBF (P)
 ```
 python btidbfp.py --dataset cifar --tlabel 5 --model resnet18 --attack wanet --device cuda:0 --size 32 --num_classes 10 --batch_size 128 --attack_type all2one \
 --mround 20 --uround 30 --norm_bound 0.3 --pur_round 30 --nround 5 --pur_norm_bound 0.05
