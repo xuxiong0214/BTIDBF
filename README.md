@@ -27,7 +27,7 @@ stealingverification
 >You can download the poisoned models which we have pretrained from the following link:
 >[checkpoints](https://www.dropbox.com/scl/fo/m1tnyzylecimqtosr5oyv/h?rlkey=cnw876kh25gf0518ipjrbfu97&dl=0)
 
-Our pretrained poisoned models have the following nameing format:  `{dataset}-{attack}-{model}-target{tlabel}.pt.tar`. These models contain model parameters and trigger information. You can use the following code to read checkpoints and easily create backdoor samples:
+Our pretrained poisoned models have the following naming format:  `{dataset}-{attack}-{model}-target{tlabel}.pt.tar`. These models contain model parameters and trigger information. You can use the following code to read checkpoints and easily create backdoor samples:
 ```Python
 import torch
 from loader import Box
