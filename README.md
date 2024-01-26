@@ -1,4 +1,5 @@
-# Towards Reliable and Efficient Backdoor Trigger Inversion via Decoupling Benign Features
+# BTIDBF
+This the official Pytorch implementation of our paper "[Towards Reliable and Efficient Backdoor Trigger Inversion via Decoupling Benign Features](https://openreview.net/forum?id=Tw9wemV6cb)", accepted by the ICLR 2024 (**Spotlight**).
 
 ## Requirements
 
@@ -9,7 +10,7 @@ pip install -r requirements.txt
 ```
 Make sure the directory follows:
 ```File Tree
-stealingverification
+BTIDBF
 ├── checkpoints
 │
 ├── datasets
@@ -41,4 +42,15 @@ python btidbf.py --dataset cifar --tlabel 5 --model resnet18 --attack wanet --de
 ```
 python btidbfu.py --dataset cifar --tlabel 5 --model resnet18 --attack wanet --device cuda:0 --size 32 --num_classes 10 --batch_size 128 --attack_type all2one \
 --mround 20 --uround 30 --norm_bound 0.3 --ul_round 30 --nround 5
+```
+
+## Citation
+If our work or this repo is useful for your research, please cite our paper as follows:
+```bibtex
+@inproceedings{xu2024towards,
+  title={Towards Reliable and Efficient Backdoor Trigger Inversion via Decoupling Benign Features},
+  author={Xu, Xiong and Huang, Kunzhe and Li, Yiming and Qin, Zhan and Ren, Kui},
+  booktitle={ICLR},
+  year={2024}
+}
 ```
