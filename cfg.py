@@ -37,9 +37,11 @@ def get_arguments():
     parser.add_argument("--norm_bound", type=float, default=0.3)
     parser.add_argument("--feat_bound", type=float, default=3)
 
-    #bti-dbf (u)
+    #defense
     parser.add_argument("--nround", type=int, default=5)
-    parser.add_argument("--ul_round", type=int, default=50)
+    parser.add_argument("--ul_round", type=int, default=30, help="iteration of dpi-dbf (u)")
+    parser.add_argument("--pur_round", type=int, default=30, help="iteration of dpi-dbf (p)")
+    parser.add_argument("--pur_norm_bound", type=float, default=0.05)
     parser.add_argument("--earlystop", type=bool, default=False)
 
     return parser

@@ -23,10 +23,11 @@ def test(testloader, testmodel, box, poisoned=False, poitarget=False , midmodel 
                 inputs = box.poisoned(inputs, param1, param2)
 
             if not midmodel is None:
-                tmodel = deepcopy(midmodel)
-                tmodel.eval()
+                tmp_model = deepcopy(midmodel)
+                tmp_model.eval()
                 gnoise = 0.03 * torch.randn_like(inputs, device=box.device)
-                inputs = tmodel(inputs + gnoise)
+                inputs = tmp_model(inputs + gnoise)
+                del tmp_model
 
             if poitarget:
                 if box.attack_type == "all2all":
