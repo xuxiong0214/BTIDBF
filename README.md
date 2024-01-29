@@ -34,10 +34,10 @@ from loader import Box
 
 opt = cfg.get_arguments().parse_args()
 box = Box(opt)
-param1, param2, poisoned_model = box.get_state_dict()
+bd_info1, bd_info2, poisoned_model = box.get_state_dict()
 testloader = box.get_dataloader(train="test", batch_size=opt.batch_size, shuffle=False)
 for imgs, labels in testloader:
-    backdoor_imgs = box.poisoned(inputs, param1, param2)
+    backdoor_imgs = box.poisoned(imgs, bd_info1, bd_info2)
 ```
 
 ## Pretrain Generator
