@@ -1,5 +1,5 @@
 # BTI-DBF
-This the official Pytorch implementation of our paper "[Towards Reliable and Efficient Backdoor Trigger Inversion via Decoupling Benign Features](https://openreview.net/forum?id=Tw9wemV6cb)", accepted by the ICLR 2024 (**Spotlight**).
+This the official Pytorch implementation of our paper "[Towards Reliable and Efficient Backdoor Trigger Inversion via Decoupling Benign Features](https://openreview.net/forum?id=Tw9wemV6cb)", accepted by the ICLR 2024 (**Spotlight**). This research project is developed based on Python 3 and Pytorch.
 
 ## Requirements
 
